@@ -17,9 +17,9 @@ import java.util.List;
 @Transactional
 public class TorcedorService {
 
-    private TorcedorRepository torcedorRepository;
-    private EnderecoRepository enderecoRepository;
-    private TelefoneRepository telefoneRepository;
+    private final TorcedorRepository torcedorRepository;
+    private final EnderecoRepository enderecoRepository;
+    private final TelefoneRepository telefoneRepository;
 
     TorcedorService( TorcedorRepository torcedorRepository,
                        EnderecoRepository enderecoRepository,

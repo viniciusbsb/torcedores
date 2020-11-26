@@ -39,7 +39,6 @@ public class TorcedorExceptionHandler {
         return errors;
     }
 
-    /*
     @ResponseBody
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -47,8 +46,6 @@ public class TorcedorExceptionHandler {
         log.error(ex.getMessage(), ex);
         return handlerMenssage(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    */
-
 
     private Map<String, Object> handlerMenssage(Exception ex, HttpStatus status) {
 

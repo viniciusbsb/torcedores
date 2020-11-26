@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping( "torcedores" )
 public class TorcedorController {
 
-    private TorcedorService torcedorService;
+    private final TorcedorService torcedorService;
 
     TorcedorController( TorcedorService torcedorService ) {
         this.torcedorService = torcedorService;
