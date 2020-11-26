@@ -27,12 +27,11 @@ public class TorcedorController {
     }
 
     @GetMapping( "/{id}" )
-    public ResponseEntity<Iterable<Torcedor>> findById( @PathVariable( "id" ) Long id ) {
+    public ResponseEntity<Torcedor> findById( @PathVariable( "id" ) Long id ) {
 
-        var torcedores = torcedorService.findAll();
-        return ResponseEntity.status( HttpStatus.OK ).body( torcedores );
+        var torcedor = torcedorService.findById( id );
+        return ResponseEntity.status( HttpStatus.OK ).body( torcedor );
     }
-
 
     @PostMapping( "/" )
     public ResponseEntity<Torcedor> save(@RequestBody Torcedor torcedor) {

@@ -21,8 +21,7 @@ public class TorcedorService {
     private EnderecoRepository enderecoRepository;
     private TelefoneRepository telefoneRepository;
 
-    @Autowired
-    private void init( TorcedorRepository torcedorRepository,
+    TorcedorService( TorcedorRepository torcedorRepository,
                        EnderecoRepository enderecoRepository,
                        TelefoneRepository telefoneRepository ) {
 
@@ -33,13 +32,13 @@ public class TorcedorService {
 
     public Torcedor findById( Long id ) {
 
-        return torcedorRepository.findById( id ).orElseThrow(TorcedorNotFoundException::new);
+        return torcedorRepository.findTorcedorById( id )
+                .orElseThrow(TorcedorNotFoundException::new);
     }
-
 
     public Iterable<Torcedor> findAll() {
 
-        return torcedorRepository.findAll();
+        return torcedorRepository.findAllTorcedores();
     }
 
     public Iterable<Torcedor> findByExample( Torcedor torcedor ) {
@@ -49,13 +48,13 @@ public class TorcedorService {
 
     public Torcedor save( Torcedor torcedor ) {
 
-        return torcedorRepository.saveAndFlush( torcedor );
+        return torcedorRepository.save( torcedor );
     }
 
     public Torcedor update( Long id, Torcedor torcedor ) {
 
         torcedor.setId( id );
-        return torcedorRepository.saveAndFlush( torcedor );
+        return torcedorRepository.save( torcedor );
     }
 
     public void delete( Long id ) {

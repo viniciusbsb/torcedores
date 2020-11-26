@@ -26,10 +26,10 @@ public class Torcedor implements Serializable {
     @Column( name = "nu_cpf", nullable = false, length = 11 )
     private String cpf;
 
-    @ManyToOne( fetch = FetchType.LAZY )
+    @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
     private Endereco endereco;
 
-    @OneToMany( fetch = FetchType.LAZY )
+    @OneToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
     private Set<Telefone> telefones;
 
 }
