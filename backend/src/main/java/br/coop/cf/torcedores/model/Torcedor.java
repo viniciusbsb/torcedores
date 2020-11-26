@@ -1,18 +1,14 @@
 package br.coop.cf.torcedores.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import br.coop.cf.torcedores.validator.Cpf;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 public class Torcedor implements Serializable {
 
@@ -20,9 +16,12 @@ public class Torcedor implements Serializable {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
+    @NotBlank( message = "Nome do torcedor é obrigatório" )
     @Column( name = "no_torcedor", nullable = false, length = 80)
     private String nome;
 
+    @Cpf( message = "CPF inválido" )
+    @NotBlank( message = "CPF é obrigatório" )
     @Column( name = "nu_cpf", nullable = false, length = 11 )
     private String cpf;
 

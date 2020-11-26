@@ -1,17 +1,13 @@
 package br.coop.cf.torcedores.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 public class Endereco implements Serializable {
 
@@ -19,25 +15,32 @@ public class Endereco implements Serializable {
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
 
+    @NotNull( message = "Cep é obrigatório" )
     @Column( name = "nu_cep", nullable = false )
-    private Integer cep = 99_999_999;
+    private Integer cep;
 
-    @Column( name = "numero", length = 30 )
+    @NotBlank( message = "Número é obrigatório" )
+    @Column( name = "numero", length = 30, nullable = false )
     private String numero;
 
-    @Column( name = "de_logradouro", length = 80 )
+    @NotBlank( message = "Logradouro é obrigatório" )
+    @Column( name = "de_logradouro", nullable = false, length = 80 )
     private String logradouro;
 
-    @Column( name = "de_complemento", length = 150 )
+    @NotBlank( message = "Complemento é obrigatório" )
+    @Column( name = "de_complemento", nullable = false, length = 150 )
     private String complemento;
 
-    @Column( name = "de_bairro", length = 90 )
+    @NotBlank( message = "Bairro é obrigatório" )
+    @Column( name = "de_bairro", nullable = false, length = 90 )
     private String bairro;
 
-    @Column( name = "de_localidade", length = 30 )
+    @NotBlank( message = "Localidade é obrigatório" )
+    @Column( name = "de_localidade", nullable = false, length = 30 )
     private String localidade;
 
-    @Column( name = "sg_uf", length = 2 )
+    @NotBlank( message = "UF é obrigatório" )
+    @Column( name = "sg_uf", nullable = false, length = 2 )
     private String uf;
 
 }

@@ -19,7 +19,7 @@ public class TorcedorController {
         this.torcedorService = torcedorService;
     }
 
-    @GetMapping( "/" )
+    @GetMapping( "" )
     public ResponseEntity<Iterable<Torcedor>> findAll() {
 
         var torcedores = torcedorService.findAll();
@@ -33,7 +33,7 @@ public class TorcedorController {
         return ResponseEntity.status( HttpStatus.OK ).body( torcedor );
     }
 
-    @PostMapping( "/" )
+    @PostMapping( "" )
     public ResponseEntity<Torcedor> save(@RequestBody Torcedor torcedor) {
 
         var torcedorSalvo = torcedorService.save( torcedor );
