@@ -1,10 +1,10 @@
 FROM openjdk:11 AS Builder
 RUN apt-get update
 RUN apt-get install -y maven
-COPY ./api/pom.xml /torcedores-app/pom.xml
-COPY ./api/src /torcedores-app/src
+COPY ./backend/pom.xml /torcedores-app/pom.xml
+COPY ./backend/src /torcedores-app/src
 WORKDIR /torcedores-app
-RUN mvn package -DskipTests=true
+RUN mvn package
 
 FROM openjdk:11
 WORKDIR /torcedores-app

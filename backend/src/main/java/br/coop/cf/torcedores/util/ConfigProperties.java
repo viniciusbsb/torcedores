@@ -11,5 +11,15 @@ import org.springframework.context.annotation.PropertySource;
 public class ConfigProperties {
 
     @Value( "${url_servico}" )
-    private String urlServico;
+    private String urlService;
+
+    @Value( "${kafka_server}" )
+    private String kafkaServer;
+
+    @Value( "${topic_TorcedorCadastrado}" )
+    private String topicTorcedorCadastrado;
+
+    @Value( "${topic_TorcedorDesligado}" )
+    private String topicTorcedorDesligado;
+
 }

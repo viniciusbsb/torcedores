@@ -13,7 +13,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.MessageFormat;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -33,7 +32,7 @@ public class EnderecoService {
 
         try {
             var restTemplate = new RestTemplate();
-            var url = MessageFormat.format(configProperties.getUrlServico(), cep);
+            var url = MessageFormat.format(configProperties.getUrlService(), cep);
             ResponseEntity<Endereco> response = restTemplate.getForEntity(url, Endereco.class);
             if (response.getStatusCode().equals(HttpStatus.OK)) {
 
