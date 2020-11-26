@@ -17,7 +17,7 @@ public class Endereco implements Serializable {
 
     @NotNull( message = "Cep é obrigatório" )
     @Column( name = "nu_cep", nullable = false )
-    private Integer cep;
+    private String cep;
 
     @NotBlank( message = "Número é obrigatório" )
     @Column( name = "numero", length = 30, nullable = false )

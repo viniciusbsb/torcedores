@@ -15,13 +15,21 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ControllerAdvice
-public class TorcedorExceptionHandler {
+public class ApplicationExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(TorcedorNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     Map<String, Object> torcedorNotFoundHandler(TorcedorNotFoundException ex) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage(), ex);
+        return handlerMenssage(ex, HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(EnderecoNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    Map<String, Object> enderecoNotFoundHandler(EnderecoNotFoundException ex) {
+        log.warn(ex.getMessage(), ex);
         return handlerMenssage(ex, HttpStatus.NOT_FOUND);
     }
 
@@ -29,6 +37,8 @@ public class TorcedorExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     Map<String, String> handleValidationExceptions(ConstraintViolationException ex) {
+
+        log.warn( ex.getMessage(), ex );
         Map<String, String> errors = new HashMap<>();
         ex.getConstraintViolations().forEach( error -> {
 
@@ -62,8 +72,6 @@ public class TorcedorExceptionHandler {
         body.put("errors", errors);
 
         return body;
-
-
     }
 
 }
