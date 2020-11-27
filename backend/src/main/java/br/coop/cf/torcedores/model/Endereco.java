@@ -1,6 +1,7 @@
 package br.coop.cf.torcedores.model;
 
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
+@Audited
 public class Endereco implements Serializable {
 
     @Id

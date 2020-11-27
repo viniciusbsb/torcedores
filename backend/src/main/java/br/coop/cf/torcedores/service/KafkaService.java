@@ -31,13 +31,6 @@ public class KafkaService {
 
     public void sendMessage(Torcedor torcedor) {
 
-        /*
-        Message<Torcedor> message = MessageBuilder
-                .withPayload(torcedor)
-                .setHeader(KafkaHeaders.TOPIC, configProperties.getTopicTorcedorCadastrado())
-                .build();
-        */
-
         ListenableFuture<SendResult< String, Torcedor >> future = kafkaTemplate.send( configProperties.getTopicTorcedorCadastrado(), torcedor );
         future.addCallback(new ListenableFutureCallback<>() {
 

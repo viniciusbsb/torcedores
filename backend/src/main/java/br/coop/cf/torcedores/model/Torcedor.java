@@ -2,6 +2,7 @@ package br.coop.cf.torcedores.model;
 
 import br.coop.cf.torcedores.validator.Cpf;
 import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Audited
 public class Torcedor implements Serializable {
 
     @Id
