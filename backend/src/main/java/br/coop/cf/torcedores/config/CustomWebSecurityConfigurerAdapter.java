@@ -24,6 +24,7 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        /*
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("user")
@@ -33,11 +34,15 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .withUser("admin")
                 .password(encoder.encode("admin"))
                 .roles("USER", "ADMIN");
+
+         */
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /*
         http.csrf().disable()
+                .cors().and()
                 .headers().cacheControl().disable()
                 .and()
                 .authorizeRequests()
@@ -45,6 +50,9 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .authenticated()
                 .and()
                 .httpBasic();
+
+         */
+        http.cors();
     }
 
     @Bean

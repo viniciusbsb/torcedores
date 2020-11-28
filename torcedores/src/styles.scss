@@ -8,6 +8,23 @@ $warn: mat-palette($mat-deep-orange);
 $app-theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($app-theme);
 
+// `headlines` and `body-1` levels.
+$custom-typography: mat-typography-config(
+    $font-family: 'Roboto, monospace',
+    $headline: mat-typography-level(26px, 44px, 700),
+    $body-1: mat-typography-level(14px, 24px, 500)
+);
+
+// Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+@include mat-base-typography($custom-typography);
+
+// Override typography for a specific Angular Material components.
+@include mat-checkbox-typography($custom-typography);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($custom-typography);
+
+
 html, body {
   height: 100%;
 }
@@ -20,4 +37,66 @@ body {
 .container-flex {
   display: flex;
   flex: 1;
+}
+
+.center-flex {
+  justify-content: center;
+}
+
+.space-around {
+  justify-content: stretch;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+mat-form-field {
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.col-100 {
+  min-width: 100%;
+}
+
+.col-90 {
+  min-width: 90%;
+}
+
+.col-80 {
+  min-width: 80%;
+}
+
+.col-70 {
+  min-width: 70%;
+}
+
+.col-60 {
+  min-width: 60%;
+}
+
+.col-50 {
+  min-width: 50%;
+}
+
+.col-40 {
+  min-width: 40%;
+}
+
+.col-30 {
+  min-width: 30%;
+}
+
+.col-20 {
+  min-width: 20%;
+}
+
+.col-10 {
+  min-width: 10%;
+}
+
+.align-right {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
 }

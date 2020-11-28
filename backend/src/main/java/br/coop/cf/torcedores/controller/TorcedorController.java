@@ -32,6 +32,12 @@ public class TorcedorController {
         var torcedor = torcedorService.findById( id );
         return ResponseEntity.status( HttpStatus.OK ).body( torcedor );
     }
+    @GetMapping( "/search" )
+    public ResponseEntity<Iterable<Torcedor>> search( @RequestParam( "cpf" ) String cpf, @RequestParam( "nome" ) String nome ) {
+
+        var torcedores = torcedorService.findByCpfOrNome( cpf, nome );
+        return ResponseEntity.status( HttpStatus.OK ).body( torcedores );
+    }
 
     @PostMapping( "" )
     public ResponseEntity<Torcedor> save(@RequestBody Torcedor torcedor) {

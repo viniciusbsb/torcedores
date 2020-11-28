@@ -9,6 +9,9 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Audited

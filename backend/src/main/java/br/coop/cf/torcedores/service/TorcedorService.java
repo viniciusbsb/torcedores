@@ -46,6 +46,13 @@ public class TorcedorService {
         return torcedorRepository.findAll( Example.of( torcedor ) );
     }
 
+    public Iterable<Torcedor> findByCpfOrNome( String cpf, String nome ) {
+
+        return torcedorRepository.findAllByCpfOrNome( cpf, nome );
+    }
+
+
+
     public Torcedor save( Torcedor torcedor ) {
 
         return torcedorRepository.save( torcedor );
