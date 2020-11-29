@@ -20,4 +20,9 @@ export class TorcedorService {
 
         return this.http.get<Torcedor[]>(`${environment.url}/api/torcedores/search`, { params });
     }
+
+    public findById( id: number ): Observable<Torcedor> {
+
+        return this.http.get<Torcedor>(`${environment.url}/api/torcedores/${id}` );
+    }
 }
