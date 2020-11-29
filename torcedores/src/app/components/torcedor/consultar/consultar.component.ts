@@ -7,6 +7,7 @@ import {EMPTY, Observable, of} from 'rxjs';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-consultar',
@@ -23,7 +24,9 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor( private fb: FormBuilder, private torcedorService: TorcedorService ) {
+    constructor( private fb: FormBuilder
+               , private torcedorService: TorcedorService
+               , private router: Router) {
 
         this.dataSource = new MatTableDataSource<Torcedor>();
         this.formConsultar = this.fb.group( {
@@ -68,6 +71,11 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
 
         this.formConsultar?.reset();
         this.cpfElement?.nativeElement.focus();
+    }
+
+    public editar( torcedor: Torcedor ): void {
+
+        this.router.navigate( [ 'torcedor', 'editar', torcedor.id  ] );
     }
 
 }
