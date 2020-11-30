@@ -3,15 +3,18 @@ import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxMaskModule} from 'ngx-mask';
+import {CustomDialogComponent} from '../components/custom-dialog/custom-dialog.component';
+import {AppMaterialModule} from '../../app-material.module';
 
 
 @NgModule({
-    declarations: [],
+    declarations: [ CustomDialogComponent ],
     imports: [
         CommonModule,
         HttpClientModule,
         ReactiveFormsModule,
-        NgxMaskModule.forRoot()
+        NgxMaskModule.forRoot(),
+        AppMaterialModule
     ],
     exports: [
         NgxMaskModule

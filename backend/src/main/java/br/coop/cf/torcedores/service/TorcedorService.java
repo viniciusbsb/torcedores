@@ -48,7 +48,13 @@ public class TorcedorService {
 
     public Iterable<Torcedor> findByCpfOrNome( String cpf, String nome ) {
 
-        return torcedorRepository.findAllByCpfOrNome( cpf, nome );
+        if ( !cpf.isEmpty() || !nome.isEmpty() ) {
+
+            return torcedorRepository.findAllByCpfOrNome(cpf, nome);
+        }else{
+
+            return torcedorRepository.findAll();
+        }
     }
 
 

@@ -8,6 +8,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import {CustomDialogComponent, DialogData} from '../../../shared/components/custom-dialog/custom-dialog.component';
 
 @Component({
     selector: 'app-consultar',
@@ -26,12 +28,13 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
 
     constructor( private fb: FormBuilder
                , private torcedorService: TorcedorService
+               , private dialog: MatDialog
                , private router: Router) {
 
         this.dataSource = new MatTableDataSource<Torcedor>();
         this.formConsultar = this.fb.group( {
-            cpf: [],
-            nome: []
+            cpf: [''],
+            nome: ['']
         } );
     }
 
@@ -85,16 +88,25 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
 
     public delete( id: number ): void {
 
-        of({}).pipe(
-            switchMap( () => {
+        const dialogRef = this.dialog.open( CustomDialogComponent, {
+            width: '300px',
+            data: { question: 'Deseja excluir o torcedor?' } as DialogData
+        } );
 
-                this.blocked = true;
-                return this.torcedorService.delete( id );
-            } ),
-            tap( () => this.handleDelete() ),
-            finalize( () => this.blocked = false ),
-            catchError( err => this.handleError( err ) )
-        ).subscribe();
+        dialogRef.afterClosed().subscribe( (data: DialogData) => {
+            if ( data.result ) {
+                of({}).pipe(
+                    switchMap( () => {
+
+                        this.blocked = true;
+                        return this.torcedorService.delete( id );
+                    } ),
+                    tap( () => this.handleDelete() ),
+                    finalize( () => this.blocked = false ),
+                    catchError( err => this.handleError( err ) )
+                ).subscribe();
+            }
+        } );
 
     }
 

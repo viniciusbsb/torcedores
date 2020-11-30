@@ -11,11 +11,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
-import {RouteReuseStrategy} from '@angular/router';
-import {CacheRouteReuseStrategy} from './service/cache-route-reuse.strategy';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     declarations: [],
@@ -35,6 +35,8 @@ import {MatSelectModule} from '@angular/material/select';
         MatTabsModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatSnackBarModule,
+        MatDialogModule,
     ],
     exports: [
         MatToolbarModule,
@@ -51,10 +53,11 @@ import {MatSelectModule} from '@angular/material/select';
         MatTabsModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatSnackBarModule,
+        MatDialogModule,
     ],
     providers: [
-        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always', appearance: 'outline'}},
-        { provide: RouteReuseStrategy, useClass: CacheRouteReuseStrategy },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {floatLabel: 'always', appearance: 'outline'}}
     ]
 })
 export class AppMaterialModule {
