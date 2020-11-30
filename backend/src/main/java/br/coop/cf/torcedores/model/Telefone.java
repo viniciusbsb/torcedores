@@ -1,6 +1,10 @@
 package br.coop.cf.torcedores.model;
 
 import br.coop.cf.torcedores.constants.TipoTelefone;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -9,7 +13,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Data
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Audited
 public class Telefone implements Serializable {
@@ -29,4 +35,9 @@ public class Telefone implements Serializable {
 
     @Column( name = "ic_principal", nullable = false )
     private Boolean isPrincipal;
+
+    @JsonIgnore
+    @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn( name = "id_torcedor" )
+    private Torcedor torcedor;
 }

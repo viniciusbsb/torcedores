@@ -20,11 +20,11 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
+
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("user")
@@ -35,12 +35,11 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .password(encoder.encode("admin"))
                 .roles("USER", "ADMIN");
 
-         */
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        /*
+
         http.csrf().disable()
                 .cors().and()
                 .headers().cacheControl().disable()
@@ -51,18 +50,12 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .and()
                 .httpBasic();
 
-         */
-        http.cors();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "OPTIONS"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+
+        registry.addMapping("/**").allowedMethods("*");
     }
 
 }

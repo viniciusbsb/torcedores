@@ -1,3 +1,4 @@
+<mat-progress-bar mode="indeterminate" color="accent" *ngIf="blocked"></mat-progress-bar>
 <form [formGroup]="formConsultar" class="mat-elevation-z2">
     <mat-card>
         <mat-card-title>Consultar</mat-card-title>
@@ -23,7 +24,7 @@
                 <button mat-raised-button color="primary" (click)="limpar()">
                     <mat-icon>clear</mat-icon>Limpar
                 </button>
-                <button mat-raised-button color="primary" (click)="consultar()">
+                <button mat-raised-button color="primary" (click)="incluir()">
                     <mat-icon>add</mat-icon>Cadastrar
                 </button>
             </div>
@@ -32,8 +33,6 @@
     </mat-card>
 </form>
 <br/>
-
-<mat-progress-bar mode="indeterminate" color="accent" *ngIf="blocked"></mat-progress-bar>
 
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -63,7 +62,7 @@
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn" aria-label="Desligar">
+                <button mat-icon-button color="warn" aria-label="Desligar" (click)="delete( element.id )">
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

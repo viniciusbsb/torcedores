@@ -78,4 +78,30 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
         this.router.navigate( [ 'torcedor', 'editar', torcedor.id  ] );
     }
 
+    public incluir(): void {
+
+        this.router.navigate( [ 'torcedor', 'incluir' ] );
+    }
+
+    public delete( id: number ): void {
+
+        of({}).pipe(
+            switchMap( () => {
+
+                this.blocked = true;
+                return this.torcedorService.delete( id );
+            } ),
+            tap( () => this.handleDelete() ),
+            finalize( () => this.blocked = false ),
+            catchError( err => this.handleError( err ) )
+        ).subscribe();
+
+    }
+
+    private handleDelete(): void {
+
+        console.log( 'Delete' );
+        this.consultar();
+    }
+
 }

@@ -9,15 +9,15 @@ export class BasicAuthInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        // const user = 'admin';
-        // const password = 'admin';
-        // const auth = btoa( `${user}:${password}` );
-        //
-        // req = req.clone({
-        //     setHeaders: {
-        //         Authorization: `Basic ${auth}`
-        //     }
-        // });
+        const user = 'admin';
+        const password = 'admin';
+        const auth = btoa( `${user}:${password}` );
+
+        req = req.clone({
+            setHeaders: {
+                Authorization: `Basic ${auth}`
+            }
+        });
 
         return next.handle( req );
     }

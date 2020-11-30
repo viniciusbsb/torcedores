@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping( "endereco" )
+@RequestMapping( "enderecos" )
 public class EnderecoController {
 
     private final EnderecoService enderecoService;

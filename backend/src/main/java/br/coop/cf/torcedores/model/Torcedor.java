@@ -1,6 +1,8 @@
 package br.coop.cf.torcedores.model;
 
 import br.coop.cf.torcedores.validator.Cpf;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.envers.Audited;
 
@@ -12,7 +14,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter @Setter
 @Entity
 @Audited
 public class Torcedor implements Serializable {
@@ -30,10 +32,10 @@ public class Torcedor implements Serializable {
     @Column( name = "nu_cpf", nullable = false, length = 11 )
     private String cpf;
 
-    @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @ManyToOne( fetch = FetchType.LAZY, cascade = {CascadeType.ALL} )
     private Endereco endereco;
 
-    @OneToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @OneToMany( fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "torcedor", orphanRemoval = true )
     private Set<Telefone> telefones;
 
 }

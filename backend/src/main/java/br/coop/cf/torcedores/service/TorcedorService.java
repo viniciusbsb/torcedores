@@ -55,12 +55,20 @@ public class TorcedorService {
 
     public Torcedor save( Torcedor torcedor ) {
 
+        torcedor.getTelefones()
+                .stream()
+                .forEach( t -> t.setTorcedor( torcedor ) );
         return torcedorRepository.save( torcedor );
     }
 
     public Torcedor update( Long id, Torcedor torcedor ) {
 
         torcedor.setId( id );
+        torcedor.getTelefones()
+                .stream()
+                .forEach( t -> t.setTorcedor( torcedor ) );
+
+
         return torcedorRepository.save( torcedor );
     }
 

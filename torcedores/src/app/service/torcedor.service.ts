@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {Torcedor} from '../model/torcedor';
 import {environment} from '../../environments/environment';
 
@@ -23,6 +23,28 @@ export class TorcedorService {
 
     public findById( id: number ): Observable<Torcedor> {
 
-        return this.http.get<Torcedor>(`${environment.url}/api/torcedores/${id}` );
+        if ( id ) {
+
+            return this.http.get<Torcedor>(`${environment.url}/api/torcedores/${id}`);
+        }else{
+
+            return EMPTY;
+        }
     }
+
+    public save( torcedor: Torcedor ): Observable<Torcedor> {
+
+        return this.http.post<Torcedor>(`${environment.url}/api/torcedores/`, torcedor );
+    }
+
+    public update( id: number, torcedor: Torcedor ): Observable<Torcedor> {
+
+        return this.http.put<Torcedor>(`${environment.url}/api/torcedores/${id}`, torcedor );
+    }
+
+    public delete( id: number ): Observable<any> {
+
+        return this.http.delete<any>(`${environment.url}/api/torcedores/${id}` );
+    }
+
 }
