@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -8,13 +7,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class AppComponent implements OnInit {
     title = 'torcedores';
+    isLogged = false;
 
-    constructor(private activatedRoute: ActivatedRoute, private  router: Router) {
+    constructor() {
     }
 
     public ngOnInit(): void {
 
-        /// this.router.navigate(['torcedor']);
+        this.logged( false );
+    }
+
+    public logged( evt: any ): void {
+        this.isLogged = !!localStorage.getItem( 'auth' );
     }
 
 }

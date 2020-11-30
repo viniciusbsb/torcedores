@@ -10,6 +10,7 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {CustomDialogComponent, DialogData} from '../../../shared/components/custom-dialog/custom-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-consultar',
@@ -26,10 +27,11 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
 
-    constructor( private fb: FormBuilder
-               , private torcedorService: TorcedorService
-               , private dialog: MatDialog
-               , private router: Router) {
+    constructor( private fb: FormBuilder,
+                 private torcedorService: TorcedorService,
+                 private snackBar: MatSnackBar,
+                 private dialog: MatDialog,
+                 private router: Router) {
 
         this.dataSource = new MatTableDataSource<Torcedor>();
         this.formConsultar = this.fb.group( {
@@ -57,12 +59,18 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
             } ),
             tap( (torcedores) => this.popularTorcedores( torcedores ) ),
             finalize( () => this.blocked = false ),
-            catchError( this.handleError )
+            catchError( err => this.handleError( err ) )
         ).subscribe();
     }
 
     private handleError( err: any ): Observable<any> {
-        console.log( err );
+
+        this.dialog.open( CustomDialogComponent, {
+            width: '300px',
+            data: { message: 'Falha ao consultar os torcedores.', info: true } as DialogData
+        } );
+
+        console.error( err );
         return EMPTY;
     }
 
@@ -112,7 +120,7 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
 
     private handleDelete(): void {
 
-        console.log( 'Delete' );
+        this.snackBar.open( 'Torcedor excluído com sucesso!' );
         this.consultar();
     }
 

@@ -7,17 +7,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppMaterialModule} from './app-material.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BasicAuthInterceptor} from './shared/interceptor/BasicAuthInterceptor';
+import {LoginComponent} from './components/login/login.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         AppMaterialModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }

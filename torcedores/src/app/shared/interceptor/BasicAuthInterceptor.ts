@@ -9,10 +9,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        const user = 'admin';
-        const password = 'admin';
-        const auth = btoa( `${user}:${password}` );
-
+        const auth = localStorage.getItem( 'auth' );
         req = req.clone({
             setHeaders: {
                 Authorization: `Basic ${auth}`

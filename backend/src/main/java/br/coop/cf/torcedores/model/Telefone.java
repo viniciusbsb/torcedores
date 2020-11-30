@@ -39,7 +39,7 @@ public class Telefone implements Serializable {
     private Boolean isPrincipal;
 
     @JsonIgnore
-    @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "id_torcedor" )
     private Torcedor torcedor;
 }

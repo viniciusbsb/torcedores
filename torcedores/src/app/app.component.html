@@ -10,5 +10,6 @@
 </mat-toolbar>
 
 <div class="container">
+  <app-login *ngIf="!isLogged" (loginEvent)="logged($event)"></app-login>
   <router-outlet></router-outlet>
 </div>
