@@ -30,7 +30,7 @@ export class CustomDialogComponent implements OnInit {
 }
 
 export interface DialogData {
-    question?: string;
+    message?: string;
     result?: boolean;
     info?: boolean;
 }

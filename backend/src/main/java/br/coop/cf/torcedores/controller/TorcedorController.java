@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,14 +41,14 @@ public class TorcedorController {
     }
 
     @PostMapping( "" )
-    public ResponseEntity<Torcedor> save(@RequestBody Torcedor torcedor) {
+    public ResponseEntity<Torcedor> save(@Valid @RequestBody Torcedor torcedor) {
 
         var torcedorSalvo = torcedorService.save( torcedor );
         return ResponseEntity.status( HttpStatus.OK ).body( torcedorSalvo );
     }
 
     @PutMapping( "/{id}" )
-    public ResponseEntity<Torcedor> update(@PathVariable( "id" ) Long id, @RequestBody Torcedor torcedor) {
+    public ResponseEntity<Torcedor> update(@PathVariable( "id" ) Long id, @Valid @RequestBody Torcedor torcedor) {
 
         var torcedorSalvo = torcedorService.update( id, torcedor );
         return ResponseEntity.status( HttpStatus.OK ).body( torcedorSalvo );

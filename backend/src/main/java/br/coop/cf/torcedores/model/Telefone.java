@@ -22,6 +22,7 @@ public class Telefone implements Serializable {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
+    @Column( name = "id_telefone" )
     private Integer id;
 
     @NotBlank( message = "Telefone é obrigatório" )

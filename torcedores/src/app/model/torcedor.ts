@@ -6,6 +6,7 @@ export interface Torcedor {
     id?: number;
     nome?: string;
     cpf?: string;
+    email?: string;
     endereco?: Endereco;
     telefones?: Telefone[];
 

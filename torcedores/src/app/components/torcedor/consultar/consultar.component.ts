@@ -90,7 +90,7 @@ export class ConsultarComponent implements OnInit, AfterViewInit {
 
         const dialogRef = this.dialog.open( CustomDialogComponent, {
             width: '300px',
-            data: { question: 'Deseja excluir o torcedor?' } as DialogData
+            data: { message: 'Deseja excluir o torcedor?' } as DialogData
         } );
 
         dialogRef.afterClosed().subscribe( (data: DialogData) => {
