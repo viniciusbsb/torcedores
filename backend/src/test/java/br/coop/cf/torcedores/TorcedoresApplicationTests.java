@@ -7,7 +7,10 @@ import br.coop.cf.torcedores.model.Telefone;
 import br.coop.cf.torcedores.model.Torcedor;
 import br.coop.cf.torcedores.repository.TorcedorRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,6 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TorcedoresApplicationTests {
 
     @LocalServerPort
@@ -48,6 +52,7 @@ class TorcedoresApplicationTests {
     private final String CPF = "00203152018";
 
     @Test
+    @Order(1)
     void testIntegracaoCEP() throws Exception {
 
         mockMvc.perform(get(String.format("http://localhost:%s/enderecos/integracao/%s", port, "71929360"))
@@ -57,6 +62,7 @@ class TorcedoresApplicationTests {
     }
 
     @Test
+    @Order(2)
     void testIntegracaoSaveTorcedor() throws Exception {
 
         var endereco = Endereco.builder()
@@ -102,6 +108,7 @@ class TorcedoresApplicationTests {
     }
 
     @Test
+    @Order(3)
     void testIntegracaoTorcedorCpfRepedito() throws Exception {
 
         var torcedorSalvo = torcedorRepository.findTorcedorByCpf(CPF).orElseThrow( TorcedorNotFoundException::new );
@@ -118,6 +125,7 @@ class TorcedoresApplicationTests {
     }
 
     @Test
+    @Order(4)
     void testIntegracaoTorcedorUpdate() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf(CPF).orElseThrow( TorcedorNotFoundException::new );
@@ -134,6 +142,7 @@ class TorcedoresApplicationTests {
     }
 
     @Test
+    @Order(5)
     void testIntegracaoConsultarTorcedor() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf( CPF ).orElseThrow( TorcedorNotFoundException::new );
@@ -146,6 +155,7 @@ class TorcedoresApplicationTests {
     }
 
     @Test
+    @Order(6)
     void testIntegracaoDeletarTorcedor() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf( CPF ).orElseThrow( TorcedorNotFoundException::new );

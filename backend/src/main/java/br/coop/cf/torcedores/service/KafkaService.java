@@ -73,11 +73,4 @@ public class KafkaService {
         });
     }
 
-
-    @KafkaListener(topics = "TorcedorCadastrado", groupId = "torcedor-app")
-    public void listenGroupFoo(@Payload Torcedor torcedor, @Headers MessageHeaders headers) {
-        log.info(String.format("Mensagem recebida: %s%n", torcedor.getCpf()));
-    }
-
-
 }
