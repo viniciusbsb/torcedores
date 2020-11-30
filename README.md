@@ -8,6 +8,7 @@
     NodeJS 12.18.3
     NPM 6.14.8
     MVN 3.6.3
+    Angular 11.0.1
 
 #### Criar Builds
 * Pasta **backend**
@@ -34,4 +35,15 @@
 
 * Pasta *raiz*
 
-    docker-compose up
+    sudo docker-compose up
+
+#### Aplicação
+
+Login
+* http://localhost:4200
+
+Logado
+* http://localhost:4200/torcedor
+
+Limpar sessão
+Application > storage > Local Storage > auth
