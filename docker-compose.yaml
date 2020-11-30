@@ -40,11 +40,12 @@ services:
             - zookeeper
 
     torcedores-app:
-        image: torcedor-app:1.0.5
+        image: torcedor-app:1.0.7
         container_name: torcedores-app
         network_mode: 'host'
         expose:
             - 8084
+            - 8080
         ports:
             - 8084:8084
         restart: unless-stopped
@@ -52,3 +53,12 @@ services:
             - postgres
             - kafka
 
+    torcedores-front:
+        image: torcedores-site:1.0.0
+        network_mode: 'host'
+        expose:
+            - 4200
+        ports:
+            - 4200:4200
+        depends_on:
+            - torcedores-app
