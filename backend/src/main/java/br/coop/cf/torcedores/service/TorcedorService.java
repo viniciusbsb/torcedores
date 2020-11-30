@@ -2,32 +2,24 @@ package br.coop.cf.torcedores.service;
 
 import br.coop.cf.torcedores.exceptions.TorcedorNotFoundException;
 import br.coop.cf.torcedores.model.Torcedor;
-import br.coop.cf.torcedores.repository.EnderecoRepository;
-import br.coop.cf.torcedores.repository.TelefoneRepository;
 import br.coop.cf.torcedores.repository.TorcedorRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
 public class TorcedorService {
 
     private final TorcedorRepository torcedorRepository;
-    private final EnderecoRepository enderecoRepository;
-    private final TelefoneRepository telefoneRepository;
+    private final KafkaService kafkaService;
 
     TorcedorService( TorcedorRepository torcedorRepository,
-                       EnderecoRepository enderecoRepository,
-                       TelefoneRepository telefoneRepository ) {
+                     KafkaService kafkaService ) {
 
         this.torcedorRepository = torcedorRepository;
-        this.enderecoRepository = enderecoRepository;
-        this.telefoneRepository = telefoneRepository;
+        this.kafkaService = kafkaService;
     }
 
     public Torcedor findById( Long id ) {
@@ -57,21 +49,21 @@ public class TorcedorService {
         }
     }
 
-
-
     public Torcedor save( Torcedor torcedor ) {
 
         torcedor.getTelefones()
-                .stream()
                 .forEach( t -> t.setTorcedor( torcedor ) );
-        return torcedorRepository.save( torcedor );
+
+        var retorno = torcedorRepository.save( torcedor );
+        kafkaService.sendMessageCadastro( retorno );
+
+        return retorno;
     }
 
     public Torcedor update( Long id, Torcedor torcedor ) {
 
         torcedor.setId( id );
         torcedor.getTelefones()
-                .stream()
                 .forEach( t -> t.setTorcedor( torcedor ) );
 
 
@@ -80,7 +72,9 @@ public class TorcedorService {
 
     public void delete( Long id ) {
 
+        var torcedor = torcedorRepository.findById( id ).orElseThrow( TorcedorNotFoundException::new );
         torcedorRepository.deleteById( id );
+        kafkaService.sendMessageDesligado( torcedor );
     }
 
 }

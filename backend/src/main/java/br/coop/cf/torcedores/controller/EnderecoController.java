@@ -36,7 +36,7 @@ public class EnderecoController {
     @GetMapping( "/send/{msg}" )
     public ResponseEntity<Void> sendMessage(@PathVariable( "msg" ) String msg ) {
 
-        kafkaService.sendMessage( torcedorService.findById( 1L ) );
+        kafkaService.sendMessageCadastro( torcedorService.findById( 1L ) );
         return ResponseEntity.status( HttpStatus.NO_CONTENT ).build();
     }
 
