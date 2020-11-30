@@ -53,7 +53,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(1)
-    void testIntegracaoCEP() throws Exception {
+    void findCepTest() throws Exception {
 
         mockMvc.perform(get(String.format("http://localhost:%s/enderecos/integracao/%s", port, "71929360"))
                 .header(HttpHeaders.AUTHORIZATION, "Basic " + Base64Utils.encodeToString("admin:admin".getBytes()))
@@ -63,7 +63,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(2)
-    void testIntegracaoSaveTorcedor() throws Exception {
+    void saveTorcedorTest() throws Exception {
 
         var endereco = Endereco.builder()
                 .cep("71929360")
@@ -109,7 +109,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(3)
-    void testIntegracaoTorcedorCpfRepedito() throws Exception {
+    void cpfConstraintErrorTest() throws Exception {
 
         var torcedorSalvo = torcedorRepository.findTorcedorByCpf(CPF).orElseThrow( TorcedorNotFoundException::new );
         torcedorSalvo.setId( null );
@@ -126,7 +126,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(4)
-    void testIntegracaoTorcedorUpdate() throws Exception {
+    void updateTorcedorTest() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf(CPF).orElseThrow( TorcedorNotFoundException::new );
         torcedor.setEmail( "email@alterado.com" );
@@ -143,7 +143,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(5)
-    void testIntegracaoConsultarTorcedor() throws Exception {
+    void findAllTorcedorTest() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf( CPF ).orElseThrow( TorcedorNotFoundException::new );
         mockMvc.perform(get(String.format("http://localhost:%s/torcedores/search", port))
@@ -156,7 +156,7 @@ class TorcedoresApplicationTests {
 
     @Test
     @Order(6)
-    void testIntegracaoDeletarTorcedor() throws Exception {
+    void deleteTorcedorTest() throws Exception {
 
         var torcedor = torcedorRepository.findTorcedorByCpf( CPF ).orElseThrow( TorcedorNotFoundException::new );
         mockMvc.perform(delete(String.format("http://localhost:%s/torcedores/%s", port, torcedor.getId()))
