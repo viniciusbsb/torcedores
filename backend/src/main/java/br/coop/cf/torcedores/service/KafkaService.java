@@ -1,7 +1,10 @@
 package br.coop.cf.torcedores.service;
 
+import br.coop.cf.torcedores.dto.TorcedorDTO;
 import br.coop.cf.torcedores.model.Torcedor;
 import br.coop.cf.torcedores.util.ConfigProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,45 +21,62 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class KafkaService {
 
     private final ConfigProperties configProperties;
-    private final KafkaTemplate<String, Torcedor> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private ObjectMapper objectMapper;
 
-    KafkaService(ConfigProperties configProperties, KafkaTemplate<String,  Torcedor> kafkaTemplate) {
+    KafkaService( ConfigProperties configProperties,
+                  KafkaTemplate<String, String> kafkaTemplate,
+                  ObjectMapper objectMapper) {
 
         this.kafkaTemplate = kafkaTemplate;
         this.configProperties = configProperties;
+        this.objectMapper = objectMapper;
     }
 
     public void sendMessageCadastro(Torcedor torcedor) {
 
-        ListenableFuture<SendResult< String, Torcedor >> future = kafkaTemplate.send( configProperties.getTopicTorcedorCadastrado(), torcedor );
-        handleKafkaMessage(torcedor, future);
+        try {
+            var msg = TorcedorDTO.builder().cpf(torcedor.getCpf()).nome(torcedor.getNome()).build();
+
+            ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(configProperties.getTopicTorcedorCadastrado(), objectMapper.writeValueAsString(msg));
+            handleKafkaMessage(torcedor, future);
+        }catch( JsonProcessingException e ) {
+
+            log.error( e.getMessage(), e );
+        }
     }
 
     public void sendMessageDesligado(Torcedor torcedor) {
+        try {
+            var msg = TorcedorDTO.builder().cpf(torcedor.getCpf()).nome(torcedor.getNome()).build();
 
-        ListenableFuture<SendResult< String, Torcedor >> future = kafkaTemplate.send( configProperties.getTopicTorcedorDesligado(), torcedor );
-        handleKafkaMessage(torcedor, future);
+            ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(configProperties.getTopicTorcedorDesligado(), objectMapper.writeValueAsString(msg));
+            handleKafkaMessage(torcedor, future);
+        }catch( JsonProcessingException e ) {
+
+            log.error( e.getMessage(), e );
+        }
     }
 
-    private void handleKafkaMessage(Torcedor torcedor, ListenableFuture<SendResult<String, Torcedor>> future) {
+    private void handleKafkaMessage(Torcedor torcedor, ListenableFuture<SendResult<String, String>> future) {
         future.addCallback(new ListenableFutureCallback<>() {
 
             @Override
-            public void onSuccess(SendResult<String, Torcedor> result) {
+            public void onSuccess(SendResult<String, String> result) {
                 log.info(String.format("Mensagem enviado com sucesso [%s]", torcedor.getCpf()));
             }
 
             @Override
             public void onFailure(Throwable ex) {
-                log.error(String.format("Falha ao enviar mensagem [%s]", torcedor.getCpf()), ex );
+                log.error(String.format("Falha ao enviar mensagem [%s]", torcedor.getCpf()), ex);
             }
         });
     }
 
 
     @KafkaListener(topics = "TorcedorCadastrado", groupId = "torcedor-app")
-    public void listenGroupFoo(@Payload Torcedor torcedor, @Headers MessageHeaders headers ) {
-        System.out.printf("Mensagem recebida: %s%n", torcedor.getCpf());
+    public void listenGroupFoo(@Payload Torcedor torcedor, @Headers MessageHeaders headers) {
+        log.info(String.format("Mensagem recebida: %s%n", torcedor.getCpf()));
     }
 
 

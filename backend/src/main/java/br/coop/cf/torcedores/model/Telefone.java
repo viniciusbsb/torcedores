@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Audited
 public class Telefone implements Serializable {
